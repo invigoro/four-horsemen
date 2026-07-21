@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Four Horsemen &mdash; Age Deck</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="app-header">
+  <h1>Age Deck</h1>
+  <p class="subtitle">Draw the next age of the game</p>
+</header>
+
+<main class="app-main">
+
+  <section class="stage">
+    <div class="card" id="stage-card">
+      <div class="card-inner" id="stage-card-inner">
+        <div class="card-face card-back"></div>
+        <div class="card-face card-front">
+          <div class="card-name" id="card-name"></div>
+          <div class="card-image">
+            <img id="card-img" alt="">
+            <div class="card-image-placeholder" id="card-img-placeholder"></div>
+          </div>
+          <div class="card-type" id="card-type"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-line" id="status-line"></div>
+
+    <div class="controls">
+      <button id="btn-draw" type="button">Draw Card</button>
+      <button id="btn-continue" type="button" class="hidden">Continue Playing</button>
+      <button id="btn-newgame" type="button" class="secondary">New Game</button>
+    </div>
+
+    <div class="game-over-banner hidden" id="game-over-banner">
+      A Calamity has been drawn &mdash; the age of legend ends here.
+    </div>
+  </section>
+
+  <section class="deck-panel">
+    <h2>Deck Contents</h2>
+    <p class="deck-panel-hint">Check or uncheck cards to manually adjust what's in the deck.</p>
+
+    <fieldset class="card-group">
+      <legend>Ages</legend>
+      <div id="checkboxes-ages" class="checkbox-list"></div>
+    </fieldset>
+
+    <fieldset class="card-group">
+      <legend>Calamities</legend>
+      <div id="checkboxes-calamities" class="checkbox-list"></div>
+    </fieldset>
+  </section>
+
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/deck.js"></script>
+<script src="js/animation.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
