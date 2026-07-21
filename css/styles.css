@@ -286,6 +286,11 @@ button#btn-continue {
   accent-color: var(--accent);
 }
 
+.btn-shuffle-calamity {
+  margin-top: .7rem;
+  width: 100%;
+}
+
 @media (max-width: 520px) {
   .card { width: 220px; height: 300px; }
   .stage { width: 240px; }

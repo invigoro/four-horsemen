@@ -49,6 +49,16 @@ window.FH = window.FH || {};
     FH.UI.updateButtons(state);
   }
 
+  function handleShuffleInCalamity() {
+    var addedId = FH.Deck.shuffleInCalamity(state);
+    if (!addedId) return;
+
+    FH.State.saveState(state);
+    FH.UI.syncCheckboxes(state);
+    FH.UI.updateStatus(state);
+    FH.UI.updateButtons(state);
+  }
+
   function init() {
     state = FH.State.loadState();
     dom = FH.UI.init();
@@ -59,6 +69,7 @@ window.FH = window.FH || {};
     dom.btnDraw.addEventListener('click', handleDraw);
     dom.btnContinue.addEventListener('click', handleContinue);
     dom.btnNewGame.addEventListener('click', handleNewGame);
+    dom.btnShuffleCalamity.addEventListener('click', handleShuffleInCalamity);
   }
 
   document.addEventListener('DOMContentLoaded', init);

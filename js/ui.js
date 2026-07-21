@@ -15,6 +15,7 @@ window.FH = window.FH || {};
     dom.btnDraw = document.getElementById('btn-draw');
     dom.btnContinue = document.getElementById('btn-continue');
     dom.btnNewGame = document.getElementById('btn-newgame');
+    dom.btnShuffleCalamity = document.getElementById('btn-shuffle-calamity');
     dom.gameOverBanner = document.getElementById('game-over-banner');
     dom.checkboxesAges = document.getElementById('checkboxes-ages');
     dom.checkboxesCalamities = document.getElementById('checkboxes-calamities');
@@ -106,6 +107,10 @@ window.FH = window.FH || {};
 
     dom.btnContinue.classList.toggle('hidden', !state.gameOver);
     dom.gameOverBanner.classList.toggle('hidden', !state.gameOver);
+
+    var calamitiesArmed = FH.Deck.calamityIdsNotInDeck(state).length;
+    dom.btnShuffleCalamity.disabled = calamitiesArmed === 0;
+    dom.btnShuffleCalamity.title = calamitiesArmed === 0 ? 'All calamities are already in the deck' : '';
   }
 
   function render(state) {
