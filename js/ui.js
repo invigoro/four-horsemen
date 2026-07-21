@@ -19,6 +19,8 @@ window.FH = window.FH || {};
     dom.gameOverBanner = document.getElementById('game-over-banner');
     dom.checkboxesAges = document.getElementById('checkboxes-ages');
     dom.checkboxesCalamities = document.getElementById('checkboxes-calamities');
+    dom.historyList = document.getElementById('history-list');
+    dom.historyEmptyHint = document.getElementById('history-empty-hint');
     return dom;
   }
 
@@ -113,6 +115,22 @@ window.FH = window.FH || {};
     dom.btnShuffleCalamity.title = calamitiesArmed === 0 ? 'All calamities are already in the deck' : '';
   }
 
+  function renderHistory(state) {
+    dom.historyList.innerHTML = '';
+
+    if (state.history.length === 0) {
+      dom.historyEmptyHint.classList.remove('hidden');
+      return;
+    }
+    dom.historyEmptyHint.classList.add('hidden');
+
+    state.history.forEach(function (id) {
+      var li = document.createElement('li');
+      li.textContent = FH.CARDS_BY_ID[id].name;
+      dom.historyList.appendChild(li);
+    });
+  }
+
   function render(state) {
     setCardContent(state.currentCard);
     if (state.currentCard) {
@@ -123,6 +141,7 @@ window.FH = window.FH || {};
     syncCheckboxes(state);
     updateStatus(state);
     updateButtons(state);
+    renderHistory(state);
   }
 
   FH.UI = {
@@ -133,6 +152,7 @@ window.FH = window.FH || {};
     syncCheckboxes: syncCheckboxes,
     updateStatus: updateStatus,
     updateButtons: updateButtons,
+    renderHistory: renderHistory,
     render: render
   };
 })();

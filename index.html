@@ -43,20 +43,29 @@
     </div>
   </section>
 
+  <section class="history-panel">
+    <h2>Previous Ages</h2>
+    <p class="deck-panel-hint" id="history-empty-hint">No ages have passed yet.</p>
+    <ol id="history-list" class="history-list"></ol>
+  </section>
+
   <section class="deck-panel">
-    <h2>Deck Contents</h2>
-    <p class="deck-panel-hint">Check or uncheck cards to manually adjust what's in the deck.</p>
+    <details id="deck-details">
+      <summary>Deck Contents <span class="reveal-hint">(click to reveal &mdash; at your own risk)</span></summary>
 
-    <fieldset class="card-group">
-      <legend>Ages</legend>
-      <div id="checkboxes-ages" class="checkbox-list"></div>
-    </fieldset>
+      <p class="deck-panel-hint">Check or uncheck cards to manually adjust what's in the deck.</p>
 
-    <fieldset class="card-group">
-      <legend>Calamities</legend>
-      <div id="checkboxes-calamities" class="checkbox-list"></div>
-      <button id="btn-shuffle-calamity" type="button" class="secondary btn-shuffle-calamity">Shuffle In Calamity</button>
-    </fieldset>
+      <fieldset class="card-group">
+        <legend>Ages</legend>
+        <div id="checkboxes-ages" class="checkbox-list"></div>
+      </fieldset>
+
+      <fieldset class="card-group">
+        <legend>Calamities</legend>
+        <div id="checkboxes-calamities" class="checkbox-list"></div>
+        <button id="btn-shuffle-calamity" type="button" class="secondary btn-shuffle-calamity">Shuffle In Calamity</button>
+      </fieldset>
+    </details>
   </section>
 
 </main>

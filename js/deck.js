@@ -48,6 +48,10 @@ window.FH = window.FH || {};
     var drawnId = randomFrom(pool);
     state.inDeck[drawnId] = false;
     state.drawsThisCycle += 1;
+
+    if (state.currentCard) {
+      state.history.push(state.currentCard);
+    }
     state.currentCard = drawnId;
 
     if (FH.CARDS_BY_ID[drawnId].type === 'calamity') {
@@ -57,23 +61,28 @@ window.FH = window.FH || {};
     return { drawnId: drawnId, shuffledInId: shuffledInId, deckEmpty: false };
   }
 
-  // True start of the game: all ages except Heroes, no calamities.
+  // True start of the game: all ages except Heroes, no calamities. History
+  // is seeded with Heroes since that's always the age the game begins in.
   function newGame(state) {
     FH.AGE_IDS.forEach(function (id) { state.inDeck[id] = (id !== 'heroes'); });
     FH.CALAMITY_IDS.forEach(function (id) { state.inDeck[id] = false; });
     state.drawsThisCycle = 0;
     state.currentCard = null;
     state.gameOver = false;
+    state.history = ['heroes'];
   }
 
   // Infinite-mode reset after a calamity: all ages (incl. Heroes) return,
   // and all calamities are re-armed (available to be shuffled in again).
+  // History is cleared -- which age comes next (possibly Heroes again) is
+  // no longer a foregone conclusion, so nothing is seeded.
   function continuePlaying(state) {
     FH.AGE_IDS.forEach(function (id) { state.inDeck[id] = true; });
     FH.CALAMITY_IDS.forEach(function (id) { state.inDeck[id] = false; });
     state.drawsThisCycle = 0;
     state.currentCard = null;
     state.gameOver = false;
+    state.history = [];
   }
 
   FH.Deck = {

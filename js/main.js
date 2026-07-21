@@ -14,6 +14,7 @@ window.FH = window.FH || {};
     FH.UI.syncCheckboxes(state);
     FH.UI.updateStatus(state);
     FH.UI.updateButtons(state);
+    FH.UI.renderHistory(state);
 
     if (result.drawnId) {
       FH.Animation.playDraw(dom.stageCard, dom.stageCardInner, function () {
@@ -28,6 +29,7 @@ window.FH = window.FH || {};
     FH.UI.syncCheckboxes(state);
     FH.UI.updateStatus(state);
     FH.UI.updateButtons(state);
+    FH.UI.renderHistory(state);
   }
 
   function handleContinue() {

@@ -16,6 +16,7 @@ window.FH = window.FH || {};
   }
 
   // Deck at the true start of a game: all ages except Heroes, no calamities.
+  // History is seeded with Heroes since it's always the age the game begins in.
   function defaultState() {
     var inDeck = {};
     FH.AGE_IDS.forEach(function (id) { inDeck[id] = (id !== 'heroes'); });
@@ -24,7 +25,8 @@ window.FH = window.FH || {};
       inDeck: inDeck,
       drawsThisCycle: 0,
       currentCard: null,
-      gameOver: false
+      gameOver: false,
+      history: ['heroes']
     };
   }
 
@@ -37,13 +39,20 @@ window.FH = window.FH || {};
     return ok;
   }
 
+  // Cookies saved before `history` existed won't have it -- default to an
+  // empty log rather than discarding the rest of the saved state.
+  function migrate(s) {
+    if (!Array.isArray(s.history)) s.history = [];
+    return s;
+  }
+
   function loadState() {
     var raw = getCookie(COOKIE_NAME);
     if (!raw) return defaultState();
     try {
       var parsed = JSON.parse(raw);
       if (!isValidState(parsed)) return defaultState();
-      return parsed;
+      return migrate(parsed);
     } catch (e) {
       return defaultState();
     }

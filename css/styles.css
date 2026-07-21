@@ -227,6 +227,33 @@ button#btn-continue {
   font-size: .9rem;
 }
 
+/* ---------- History panel ---------- */
+
+.history-panel {
+  flex: 1 1 220px;
+  max-width: 260px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.history-panel h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.history-list {
+  margin: 0;
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  font-size: .92rem;
+}
+
 /* ---------- Deck panel ---------- */
 
 .deck-panel {
@@ -238,17 +265,37 @@ button#btn-continue {
   padding: 1rem 1.25rem 1.25rem;
 }
 
-.deck-panel h2 {
-  margin-top: 0;
+.deck-panel summary {
+  margin: 0;
   font-size: 1.05rem;
   letter-spacing: .04em;
   text-transform: uppercase;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.deck-panel summary::marker {
+  color: var(--accent);
+}
+
+.deck-panel .reveal-hint {
+  display: block;
+  margin-top: .3rem;
+  font-size: .78rem;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--ink-dim);
+  font-style: italic;
+}
+
+.deck-panel details[open] summary .reveal-hint {
+  display: none;
 }
 
 .deck-panel-hint {
   color: var(--ink-dim);
   font-size: .85rem;
-  margin-top: -.4rem;
+  margin-top: .8rem;
 }
 
 .card-group {
