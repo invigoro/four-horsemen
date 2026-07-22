@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Four Horsemen &mdash; Age Deck</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -22,6 +24,8 @@
           <img src="img/horse.png" alt="" class="card-back-logo">
         </div>
         <div class="card-face card-front">
+          <i class="card-corner-icon corner-tl" id="card-corner-icon-tl" aria-hidden="true"></i>
+          <i class="card-corner-icon corner-br" id="card-corner-icon-br" aria-hidden="true"></i>
           <div class="card-name" id="card-name"></div>
           <div class="card-image">
             <img id="card-img" alt="">
@@ -46,7 +50,7 @@
   </section>
 
   <section class="history-panel">
-    <h2>Previous Ages</h2>
+    <h2>Age History</h2>
     <p class="deck-panel-hint" id="history-empty-hint">No ages have passed yet.</p>
     <ol id="history-list" class="history-list"></ol>
   </section>

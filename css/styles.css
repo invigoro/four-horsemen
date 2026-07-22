@@ -139,6 +139,28 @@ body {
   box-shadow: 0 0 22px var(--calamity-glow), 0 10px 24px rgba(0, 0, 0, .45);
 }
 
+.card-corner-icon {
+  position: absolute;
+  font-size: 1.15rem;
+  color: var(--accent);
+  opacity: .85;
+}
+
+.card-corner-icon.corner-tl {
+  top: .6rem;
+  left: .7rem;
+}
+
+.card-corner-icon.corner-br {
+  bottom: .6rem;
+  right: .7rem;
+  transform: rotate(180deg);
+}
+
+.card.is-calamity .card-corner-icon {
+  color: var(--calamity);
+}
+
 .card-name {
   font-weight: 700;
   font-size: 1.15rem;
@@ -262,6 +284,27 @@ button#btn-continue {
   flex-direction: column;
   gap: .35rem;
   font-size: .92rem;
+}
+
+.history-current {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.history-current .fa-chevron-right {
+  font-size: .75rem;
+}
+
+.history-current.fade-in {
+  animation: historyFadeIn .4s ease-out;
+}
+
+@keyframes historyFadeIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 /* ---------- Deck panel ---------- */

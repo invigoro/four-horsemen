@@ -14,11 +14,14 @@ window.FH = window.FH || {};
     FH.UI.syncCheckboxes(state);
     FH.UI.updateStatus(state);
     FH.UI.updateButtons(state);
-    FH.UI.renderHistory(state);
+    // Don't reveal the drawn card's name in the log until its flip actually starts.
+    FH.UI.renderHistory(state, { includeCurrent: false });
 
     if (result.drawnId) {
       FH.Animation.playDraw(dom.stageCard, dom.stageCardInner, function () {
         FH.UI.setCardContent(state.currentCard);
+      }, function () {
+        FH.UI.renderHistory(state, { animateCurrent: true });
       });
     }
   }

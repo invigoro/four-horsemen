@@ -11,6 +11,8 @@ window.FH = window.FH || {};
     dom.cardType = document.getElementById('card-type');
     dom.cardImg = document.getElementById('card-img');
     dom.cardImgPlaceholder = document.getElementById('card-img-placeholder');
+    dom.cardCornerIconTl = document.getElementById('card-corner-icon-tl');
+    dom.cardCornerIconBr = document.getElementById('card-corner-icon-br');
     dom.statusLine = document.getElementById('status-line');
     dom.btnDraw = document.getElementById('btn-draw');
     dom.btnContinue = document.getElementById('btn-continue');
@@ -29,6 +31,11 @@ window.FH = window.FH || {};
     return 'Age';
   }
 
+  function historyLabel(card) {
+    if (card.type === 'calamity') return 'Age of Calamity: ' + card.name;
+    return card.name;
+  }
+
   // Swaps the front face's content. Safe to call while the back is showing.
   function setCardContent(cardId) {
     var card = cardId ? FH.CARDS_BY_ID[cardId] : null;
@@ -39,12 +46,17 @@ window.FH = window.FH || {};
       dom.cardImg.style.display = 'none';
       dom.cardImg.src = '';
       dom.cardImgPlaceholder.style.display = 'none';
+      dom.cardCornerIconTl.className = 'card-corner-icon corner-tl';
+      dom.cardCornerIconBr.className = 'card-corner-icon corner-br';
       return;
     }
 
     dom.cardName.textContent = card.name;
     dom.cardType.textContent = typeLabel(card);
     dom.stageCard.classList.toggle('is-calamity', card.type === 'calamity');
+
+    dom.cardCornerIconTl.className = 'card-corner-icon corner-tl ' + card.icon;
+    dom.cardCornerIconBr.className = 'card-corner-icon corner-br ' + card.icon;
 
     dom.cardImgPlaceholder.style.display = 'none';
     dom.cardImgPlaceholder.textContent = card.name;
@@ -115,20 +127,37 @@ window.FH = window.FH || {};
     dom.btnShuffleCalamity.title = calamitiesArmed === 0 ? 'All calamities are already in the deck' : '';
   }
 
-  function renderHistory(state) {
-    dom.historyList.innerHTML = '';
+  // opts.includeCurrent (default true): append the current card as a
+  // highlighted entry. Pass false while a draw's reveal animation is still
+  // playing, so the log doesn't spoil the result before the flip does.
+  // opts.animateCurrent (default false): fade the current entry in --
+  // used once the reveal animation actually starts.
+  function renderHistory(state, opts) {
+    opts = opts || {};
+    var includeCurrent = opts.includeCurrent !== false;
+    var showCurrent = includeCurrent && !!state.currentCard;
 
-    if (state.history.length === 0) {
-      dom.historyEmptyHint.classList.remove('hidden');
-      return;
-    }
-    dom.historyEmptyHint.classList.add('hidden');
+    dom.historyList.innerHTML = '';
+    dom.historyEmptyHint.classList.toggle('hidden', state.history.length > 0 || showCurrent);
 
     state.history.forEach(function (id) {
       var li = document.createElement('li');
-      li.textContent = FH.CARDS_BY_ID[id].name;
+      li.textContent = historyLabel(FH.CARDS_BY_ID[id]);
       dom.historyList.appendChild(li);
     });
+
+    if (showCurrent) {
+      var li = document.createElement('li');
+      li.className = 'history-current' + (opts.animateCurrent ? ' fade-in' : '');
+
+      var icon = document.createElement('i');
+      icon.className = 'fa-solid fa-chevron-right';
+      icon.setAttribute('aria-hidden', 'true');
+
+      li.appendChild(icon);
+      li.appendChild(document.createTextNode(' ' + historyLabel(FH.CARDS_BY_ID[state.currentCard])));
+      dom.historyList.appendChild(li);
+    }
   }
 
   function render(state) {
