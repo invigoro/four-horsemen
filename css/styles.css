@@ -12,8 +12,8 @@
   --accent-ink: #14151c;
   --calamity: #8c2f39;
   --calamity-glow: rgba(140, 40, 50, .55);
-  --card-back-1: #262838;
-  --card-back-2: #14151c;
+  --card-back-1: #530f16;
+  --card-back-2: #3b0910;
   --card-front: #f3efe3;
   --card-front-ink: #201d16;
 }
@@ -112,6 +112,16 @@ body {
   background:
     repeating-linear-gradient(45deg, var(--card-back-1) 0 10px, var(--card-back-2) 10px 20px);
   border: 2px solid var(--accent);
+  align-items: center;
+  justify-content: center;
+}
+
+.card-back-logo {
+  width: 62%;
+  max-width: 62%;
+  max-height: 62%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .6));
 }
 
 .card-front {

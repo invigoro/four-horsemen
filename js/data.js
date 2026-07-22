@@ -12,9 +12,9 @@ FH.CARDS = [
   { id: 'dark',              name: 'Dark Age',           type: 'age',      img: 'img/dark.png' },
   { id: 'prosperity',        name: 'Age of Prosperity',  type: 'age',      img: 'img/prosperity.png' },
 
-  { id: 'pestilence',        name: 'Pestilence',         type: 'calamity', suit: 'clubs',    img: 'img/horse.png' },
-  { id: 'famine',            name: 'Famine',             type: 'calamity', suit: 'spades',   img: 'img/horse.png' },
-  { id: 'conquest_calamity', name: 'Conquest',           type: 'calamity', suit: 'diamonds', img: 'img/horse.png' },
+  { id: 'pestilence',        name: 'Pestilence',         type: 'calamity', suit: 'clubs',    img: 'img/pestilence.png' },
+  { id: 'famine',            name: 'Famine',             type: 'calamity', suit: 'spades',   img: 'img/famine.png' },
+  { id: 'conquest_calamity', name: 'Conquest',           type: 'calamity', suit: 'diamonds', img: 'img/conquest_calamity.png' },
   { id: 'death',             name: 'Death',              type: 'calamity', suit: 'hearts',   img: 'img/horse.png' }
 ];
 
