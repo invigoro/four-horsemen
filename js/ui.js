@@ -57,7 +57,7 @@ window.FH = window.FH || {};
 
     var topCard = dom.drawDeck.lastElementChild;
     var logo = document.createElement('img');
-    logo.src = 'img/horse.png';
+    logo.src = 'img/horsemen2.png';
     logo.alt = '';
     logo.className = 'draw-deck-logo';
     topCard.appendChild(logo);
@@ -162,6 +162,8 @@ window.FH = window.FH || {};
 
     dom.btnDraw.disabled = state.gameOver || deckCount === 0;
     dom.btnDraw.title = (!state.gameOver && deckCount === 0) ? 'No cards left in the deck' : '';
+    dom.drawDeck.classList.toggle('is-disabled', dom.btnDraw.disabled);
+    dom.drawDeck.title = dom.btnDraw.disabled ? dom.btnDraw.title : 'Click to draw the next age';
 
     dom.btnContinue.classList.toggle('hidden', !state.gameOver);
     dom.gameOverBanner.classList.toggle('hidden', !state.gameOver);

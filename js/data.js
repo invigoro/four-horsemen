@@ -18,7 +18,7 @@ FH.CARDS = [
   { id: 'pestilence',        name: 'Pestilence',         type: 'calamity', suit: 'clubs',    img: 'img/pestilence.png',        icon: 'fa-solid fa-virus' },
   { id: 'famine',            name: 'Famine',             type: 'calamity', suit: 'spades',   img: 'img/famine.png',            icon: 'fa-solid fa-wheat-awn' },
   { id: 'conquest_calamity', name: 'Conquest',           type: 'calamity', suit: 'diamonds', img: 'img/conquest_calamity.png', icon: 'fa-solid fa-fire' },
-  { id: 'death',             name: 'Death',              type: 'calamity', suit: 'hearts',   img: 'img/horse.png',             icon: 'fa-solid fa-skull-crossbones' }
+  { id: 'death',             name: 'Death',              type: 'calamity', suit: 'hearts',   img: 'img/death.png',             icon: 'fa-solid fa-skull-crossbones' }
 ];
 
 FH.CARDS_BY_ID = {};

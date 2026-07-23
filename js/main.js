@@ -81,6 +81,13 @@ window.FH = window.FH || {};
     dom.btnContinue.addEventListener('click', handleContinue);
     dom.btnNewGame.addEventListener('click', handleNewGame);
     dom.btnShuffleCalamity.addEventListener('click', handleShuffleInCalamity);
+
+    // Clicking the deck pile itself is a shortcut for the Draw Card button.
+    dom.drawDeck.addEventListener('click', function (e) {
+      if (dom.btnDraw.disabled) return;
+      if (!e.target.closest('.draw-deck-card')) return;
+      handleDraw();
+    });
   }
 
   document.addEventListener('DOMContentLoaded', init);

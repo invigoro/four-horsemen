@@ -104,6 +104,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+}
+
+.draw-deck-card:hover {
+  filter: brightness(1.12);
+}
+
+.draw-deck.is-disabled .draw-deck-card {
+  cursor: not-allowed;
+}
+
+.draw-deck.is-disabled .draw-deck-card:hover {
+  filter: none;
 }
 
 .draw-deck-logo {
