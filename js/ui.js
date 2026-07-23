@@ -26,8 +26,15 @@ window.FH = window.FH || {};
     return dom;
   }
 
-  function typeLabel(card) {
-    if (card.type === 'calamity') return 'Calamity — ' + card.suit;
+  // Calamities display as "Age of Calamity" up top with their specific
+  // name (e.g. "Famine") below -- ages just show their name up top.
+  function headerLabel(card) {
+    if (card.type === 'calamity') return 'Age of Calamity';
+    return card.name;
+  }
+
+  function subLabel(card) {
+    if (card.type === 'calamity') return card.name;
     return 'Age';
   }
 
@@ -51,8 +58,8 @@ window.FH = window.FH || {};
       return;
     }
 
-    dom.cardName.textContent = card.name;
-    dom.cardType.textContent = typeLabel(card);
+    dom.cardName.textContent = headerLabel(card);
+    dom.cardType.textContent = subLabel(card);
     dom.stageCard.classList.toggle('is-calamity', card.type === 'calamity');
 
     dom.cardCornerIconTl.className = 'card-corner-icon corner-tl ' + card.icon;
