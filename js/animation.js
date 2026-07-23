@@ -40,14 +40,7 @@ window.FH = window.FH || {};
     }
   }
 
-  // Resets the card to its unrevealed, off-stage state (used by New Game / Continue Playing).
-  function resetCard(cardEl, cardInnerEl) {
-    cardInnerEl.classList.remove('flipped');
-    cardEl.classList.remove('dealing', 'dealt');
-  }
-
   FH.Animation = {
-    playDraw: playDraw,
-    resetCard: resetCard
+    playDraw: playDraw
   };
 })();

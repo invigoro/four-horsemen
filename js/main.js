@@ -5,53 +5,61 @@ window.FH = window.FH || {};
   var state;
   var dom;
 
-  function handleDraw() {
-    if (state.gameOver) return;
-
-    var result = FH.Deck.drawCard(state);
-    FH.State.saveState(state);
-
+  function refreshCommonUI() {
     FH.UI.syncCheckboxes(state);
     FH.UI.updateStatus(state);
     FH.UI.updateButtons(state);
+    FH.UI.renderDrawDeck(state);
+  }
+
+  // Plays the deal + flip animation for whatever is currently state.currentCard.
+  function revealCurrentCard() {
+    FH.Animation.playDraw(dom.stageCard, dom.stageCardInner, function () {
+      FH.UI.setCardContent(state.currentCard);
+    }, function () {
+      FH.UI.renderHistory(state, { animateCurrent: true });
+    });
+  }
+
+  function performDraw() {
+    var result = FH.Deck.drawCard(state);
+    FH.State.saveState(state);
+
+    refreshCommonUI();
     // Don't reveal the drawn card's name in the log until its flip actually starts.
     FH.UI.renderHistory(state, { includeCurrent: false });
 
     if (result.drawnId) {
-      FH.Animation.playDraw(dom.stageCard, dom.stageCardInner, function () {
-        FH.UI.setCardContent(state.currentCard);
-      }, function () {
-        FH.UI.renderHistory(state, { animateCurrent: true });
-      });
+      revealCurrentCard();
     }
   }
 
-  function resetStageVisual() {
-    FH.Animation.resetCard(dom.stageCard, dom.stageCardInner);
-    FH.UI.setCardContent(null);
-    FH.UI.syncCheckboxes(state);
-    FH.UI.updateStatus(state);
-    FH.UI.updateButtons(state);
-    FH.UI.renderHistory(state);
+  function handleDraw() {
+    if (state.gameOver) return;
+    performDraw();
   }
 
   function handleContinue() {
     FH.Deck.continuePlaying(state);
     FH.State.saveState(state);
-    resetStageVisual();
+    // Immediately draw the next age -- no face-down card should sit idle here.
+    performDraw();
   }
 
   function handleNewGame() {
     FH.Deck.newGame(state);
     FH.State.saveState(state);
-    resetStageVisual();
+
+    refreshCommonUI();
+    FH.UI.renderHistory(state, { includeCurrent: false });
+    // Heroes isn't drawn from the pool, but it should reveal the same way a draw does.
+    revealCurrentCard();
   }
 
   function handleCheckboxToggle(id, checked) {
     state.inDeck[id] = checked;
     FH.State.saveState(state);
-    FH.UI.updateStatus(state);
-    FH.UI.updateButtons(state);
+    refreshCommonUI();
   }
 
   function handleShuffleInCalamity() {
@@ -59,9 +67,7 @@ window.FH = window.FH || {};
     if (!addedId) return;
 
     FH.State.saveState(state);
-    FH.UI.syncCheckboxes(state);
-    FH.UI.updateStatus(state);
-    FH.UI.updateButtons(state);
+    refreshCommonUI();
   }
 
   function init() {

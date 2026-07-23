@@ -61,7 +61,14 @@ body {
   align-items: center;
   gap: 1rem;
   flex: 0 0 auto;
-  width: 280px;
+}
+
+.stage-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
 .card {
@@ -69,6 +76,53 @@ body {
   height: 360px;
   perspective: 1200px;
   opacity: 1;
+}
+
+/* ---------- Draw deck (remaining-card pile) ---------- */
+/* Mini cards match the drawn card's own size (see .card); DRAW_DECK_OFFSET_PX
+   in js/ui.js controls how far each one peeks out and must stay in sync with
+   the max-stack-height reserved below (up to 11 cards can be in the deck). */
+
+.draw-deck {
+  position: relative;
+  width: 260px;
+  height: 540px;
+  flex: 0 0 auto;
+}
+
+.draw-deck-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 360px;
+  border-radius: 14px;
+  border: 2px solid var(--accent);
+  background:
+    repeating-linear-gradient(45deg, var(--card-back-1) 0 10px, var(--card-back-2) 10px 20px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.draw-deck-logo {
+  width: 62%;
+  max-width: 62%;
+  max-height: 62%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .6));
+}
+
+.draw-deck-empty {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 360px;
+  border-radius: 14px;
+  border: 2px dashed var(--panel-border);
+  opacity: .6;
 }
 
 .card.dealing {
@@ -393,5 +447,6 @@ button#btn-continue {
 
 @media (max-width: 520px) {
   .card { width: 220px; height: 300px; }
-  .stage { width: 240px; }
+  .draw-deck { width: 220px; height: 480px; }
+  .draw-deck-card, .draw-deck-empty { width: 220px; height: 300px; }
 }

@@ -61,15 +61,17 @@ window.FH = window.FH || {};
     return { drawnId: drawnId, shuffledInId: shuffledInId, deckEmpty: false };
   }
 
-  // True start of the game: all ages except Heroes, no calamities. History
-  // is seeded with Heroes since that's always the age the game begins in.
+  // True start of the game: all ages except Heroes, no calamities. Heroes
+  // is shown as the current card immediately (it's always the age the game
+  // begins in, not something drawn from the pool), so history starts empty --
+  // it'll move there once the first real draw happens.
   function newGame(state) {
     FH.AGE_IDS.forEach(function (id) { state.inDeck[id] = (id !== 'heroes'); });
     FH.CALAMITY_IDS.forEach(function (id) { state.inDeck[id] = false; });
     state.drawsThisCycle = 0;
-    state.currentCard = null;
+    state.currentCard = 'heroes';
     state.gameOver = false;
-    state.history = ['heroes'];
+    state.history = [];
   }
 
   // Infinite-mode reset after a calamity: all ages (incl. Heroes) return,

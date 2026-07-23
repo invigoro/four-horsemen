@@ -23,7 +23,44 @@ window.FH = window.FH || {};
     dom.checkboxesCalamities = document.getElementById('checkboxes-calamities');
     dom.historyList = document.getElementById('history-list');
     dom.historyEmptyHint = document.getElementById('history-empty-hint');
+    dom.drawDeck = document.getElementById('draw-deck');
     return dom;
+  }
+
+  // Must stay in sync with the .draw-deck container height in css/styles.css
+  // (sized to fit the worst case of all 11 cards stacked).
+  var DRAW_DECK_OFFSET_PX = 18;
+
+  // Renders a pile of full-size, face-down cards -- one per card still
+  // drawable this round (undrawn ages + calamities currently shuffled in) --
+  // stacked so each one peeks out from behind the card in front of it.
+  function renderDrawDeck(state) {
+    var count = FH.Deck.allIdsInDeck(state).length;
+    dom.drawDeck.innerHTML = '';
+
+    if (count === 0) {
+      var empty = document.createElement('div');
+      empty.className = 'draw-deck-empty';
+      dom.drawDeck.appendChild(empty);
+      return;
+    }
+
+    // k=0 is the frontmost/topmost card (zero offset); larger k sits
+    // further back and further down, so it peeks out below the one in front.
+    for (var k = count - 1; k >= 0; k--) {
+      var mini = document.createElement('div');
+      mini.className = 'draw-deck-card';
+      mini.style.top = (k * DRAW_DECK_OFFSET_PX) + 'px';
+      mini.style.zIndex = String(count - k);
+      dom.drawDeck.appendChild(mini);
+    }
+
+    var topCard = dom.drawDeck.lastElementChild;
+    var logo = document.createElement('img');
+    logo.src = 'img/horse.png';
+    logo.alt = '';
+    logo.className = 'draw-deck-logo';
+    topCard.appendChild(logo);
   }
 
   // Calamities display as "Age of Calamity" up top with their specific
@@ -178,6 +215,7 @@ window.FH = window.FH || {};
     updateStatus(state);
     updateButtons(state);
     renderHistory(state);
+    renderDrawDeck(state);
   }
 
   FH.UI = {
@@ -189,6 +227,7 @@ window.FH = window.FH || {};
     updateStatus: updateStatus,
     updateButtons: updateButtons,
     renderHistory: renderHistory,
+    renderDrawDeck: renderDrawDeck,
     render: render
   };
 })();

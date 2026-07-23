@@ -17,21 +17,31 @@
 
 <main class="app-main">
 
+  <section class="history-panel">
+    <h2>Age History</h2>
+    <p class="deck-panel-hint" id="history-empty-hint">No ages have passed yet.</p>
+    <ol id="history-list" class="history-list"></ol>
+  </section>
+
   <section class="stage">
-    <div class="card" id="stage-card">
-      <div class="card-inner" id="stage-card-inner">
-        <div class="card-face card-back">
-          <img src="img/horse.png" alt="" class="card-back-logo">
-        </div>
-        <div class="card-face card-front">
-          <i class="card-corner-icon corner-tl" id="card-corner-icon-tl" aria-hidden="true"></i>
-          <i class="card-corner-icon corner-br" id="card-corner-icon-br" aria-hidden="true"></i>
-          <div class="card-name" id="card-name"></div>
-          <div class="card-image">
-            <img id="card-img" alt="">
-            <div class="card-image-placeholder" id="card-img-placeholder"></div>
+    <div class="stage-row">
+      <div class="draw-deck" id="draw-deck" aria-hidden="true"></div>
+
+      <div class="card" id="stage-card">
+        <div class="card-inner" id="stage-card-inner">
+          <div class="card-face card-back">
+            <img src="img/horse.png" alt="" class="card-back-logo">
           </div>
-          <div class="card-type" id="card-type"></div>
+          <div class="card-face card-front">
+            <i class="card-corner-icon corner-tl" id="card-corner-icon-tl" aria-hidden="true"></i>
+            <i class="card-corner-icon corner-br" id="card-corner-icon-br" aria-hidden="true"></i>
+            <div class="card-name" id="card-name"></div>
+            <div class="card-image">
+              <img id="card-img" alt="">
+              <div class="card-image-placeholder" id="card-img-placeholder"></div>
+            </div>
+            <div class="card-type" id="card-type"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -47,12 +57,6 @@
     <div class="game-over-banner hidden" id="game-over-banner">
       A Calamity has been drawn &mdash; the age of legend ends here.
     </div>
-  </section>
-
-  <section class="history-panel">
-    <h2>Age History</h2>
-    <p class="deck-panel-hint" id="history-empty-hint">No ages have passed yet.</p>
-    <ol id="history-list" class="history-list"></ol>
   </section>
 
   <section class="deck-panel">

@@ -16,7 +16,8 @@ window.FH = window.FH || {};
   }
 
   // Deck at the true start of a game: all ages except Heroes, no calamities.
-  // History is seeded with Heroes since it's always the age the game begins in.
+  // Heroes is shown as the current card immediately since it's always the
+  // age the game begins in, not something drawn from the pool.
   function defaultState() {
     var inDeck = {};
     FH.AGE_IDS.forEach(function (id) { inDeck[id] = (id !== 'heroes'); });
@@ -24,9 +25,9 @@ window.FH = window.FH || {};
     return {
       inDeck: inDeck,
       drawsThisCycle: 0,
-      currentCard: null,
+      currentCard: 'heroes',
       gameOver: false,
-      history: ['heroes']
+      history: []
     };
   }
 
