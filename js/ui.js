@@ -56,10 +56,9 @@ window.FH = window.FH || {};
     }
 
     var topCard = dom.drawDeck.lastElementChild;
-    var logo = document.createElement('img');
-    logo.src = 'img/horsemen2.png';
-    logo.alt = '';
+    var logo = document.createElement('div');
     logo.className = 'draw-deck-logo';
+    logo.setAttribute('aria-hidden', 'true');
     topCard.appendChild(logo);
   }
 
