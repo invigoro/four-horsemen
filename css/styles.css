@@ -469,6 +469,15 @@ button#btn-continue {
   accent-color: var(--accent);
 }
 
+.checkbox-row:has(input:disabled) {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.checkbox-row input:disabled {
+  cursor: not-allowed;
+}
+
 .btn-shuffle-calamity {
   margin-top: .7rem;
   width: 100%;

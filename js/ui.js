@@ -148,28 +148,36 @@ window.FH = window.FH || {};
 
   function updateStatus(state) {
     var deckCount = FH.Deck.allIdsInDeck(state).length;
-    var calamitiesAvailable = FH.Deck.calamityIdsInDeck(state).length + FH.Deck.calamityIdsNotInDeck(state).length;
     var calamitiesArmed = FH.Deck.calamityIdsNotInDeck(state).length;
 
     dom.statusLine.textContent =
       'Cards in deck: ' + deckCount +
-      ' · Calamities still available to shuffle in: ' + calamitiesArmed + '/' + calamitiesAvailable;
+      ' · Calamities still available to shuffle in: ' + calamitiesArmed + '/' + FH.CALAMITY_IDS.length;
   }
 
-  function updateButtons(state) {
+  // opts.locked (default false): a draw is currently animating -- disable
+  // every manual control so the deck can't change out from under it.
+  function updateButtons(state, opts) {
+    opts = opts || {};
+    var locked = !!opts.locked;
     var deckCount = FH.Deck.allIdsInDeck(state).length;
 
-    dom.btnDraw.disabled = state.gameOver || deckCount === 0;
-    dom.btnDraw.title = (!state.gameOver && deckCount === 0) ? 'No cards left in the deck' : '';
+    dom.btnDraw.disabled = locked || state.gameOver || deckCount === 0;
+    dom.btnDraw.title = (!locked && !state.gameOver && deckCount === 0) ? 'No cards left in the deck' : '';
     dom.drawDeck.classList.toggle('is-disabled', dom.btnDraw.disabled);
     dom.drawDeck.title = dom.btnDraw.disabled ? dom.btnDraw.title : 'Click to draw the next age';
 
     dom.btnContinue.classList.toggle('hidden', !state.gameOver);
+    dom.btnContinue.disabled = locked;
+    dom.btnNewGame.disabled = locked;
     dom.gameOverBanner.classList.toggle('hidden', !state.gameOver);
 
     var calamitiesArmed = FH.Deck.calamityIdsNotInDeck(state).length;
-    dom.btnShuffleCalamity.disabled = calamitiesArmed === 0;
+    dom.btnShuffleCalamity.disabled = locked || calamitiesArmed === 0;
     dom.btnShuffleCalamity.title = calamitiesArmed === 0 ? 'All calamities are already in the deck' : '';
+
+    var checkboxInputs = document.querySelectorAll('#checkboxes-ages input, #checkboxes-calamities input');
+    checkboxInputs.forEach(function (input) { input.disabled = locked; });
   }
 
   // opts.includeCurrent (default true): append the current card as a

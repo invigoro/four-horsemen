@@ -11,6 +11,10 @@ window.FH = window.FH || {};
   function calamityIdsInDeck(state) { return idsInDeck(state, FH.CALAMITY_IDS); }
   function allIdsInDeck(state) { return ageIdsInDeck(state).concat(calamityIdsInDeck(state)); }
 
+  // The checkboxes ARE the deck: whatever's currently unchecked is a valid
+  // shuffle-in candidate, including something a player manually removed --
+  // manually unchecking a calamity only takes it out of the deck right now,
+  // it doesn't block it from being shuffled back in later.
   function calamityIdsNotInDeck(state) {
     return FH.CALAMITY_IDS.filter(function (id) { return !state.inDeck[id]; });
   }
@@ -19,8 +23,8 @@ window.FH = window.FH || {};
     return arr[Math.floor(Math.random() * arr.length)];
   }
 
-  // Shuffles one random not-yet-available calamity into the deck.
-  // Returns the id added, or null if all calamities are already in the deck.
+  // Shuffles one random not-currently-in-the-deck calamity into the deck.
+  // Returns the id added, or null if every calamity is already in the deck.
   function shuffleInCalamity(state) {
     var candidates = calamityIdsNotInDeck(state);
     if (candidates.length === 0) return null;
@@ -29,25 +33,20 @@ window.FH = window.FH || {};
     return id;
   }
 
-  // Draws a card per the age-transition rules:
-  //  - first draw of a cycle: draw straight from the current deck
-  //  - every subsequent draw: shuffle in one calamity first, then draw
-  // Returns { drawnId, shuffledInId, deckEmpty } -- drawnId is null if the
-  // deck was empty and nothing could be drawn.
+  // Draws a card straight from the deck as it currently stands. Does NOT
+  // shuffle in a calamity -- that's a separate step the caller runs
+  // afterward (see js/main.js), so a newly shuffled-in calamity is never
+  // the one that gets drawn in the same action; it's only ever a
+  // possibility starting with the *next* draw.
+  // Returns { drawnId, deckEmpty } -- drawnId is null if the deck was empty.
   function drawCard(state) {
-    var shuffledInId = null;
-    if (state.drawsThisCycle > 0) {
-      shuffledInId = shuffleInCalamity(state);
-    }
-
     var pool = allIdsInDeck(state);
     if (pool.length === 0) {
-      return { drawnId: null, shuffledInId: shuffledInId, deckEmpty: true };
+      return { drawnId: null, deckEmpty: true };
     }
 
     var drawnId = randomFrom(pool);
     state.inDeck[drawnId] = false;
-    state.drawsThisCycle += 1;
 
     if (state.currentCard) {
       state.history.push(state.currentCard);
@@ -58,7 +57,7 @@ window.FH = window.FH || {};
       state.gameOver = true;
     }
 
-    return { drawnId: drawnId, shuffledInId: shuffledInId, deckEmpty: false };
+    return { drawnId: drawnId, deckEmpty: false };
   }
 
   // True start of the game: all ages except Heroes, no calamities. Heroes
@@ -68,7 +67,6 @@ window.FH = window.FH || {};
   function newGame(state) {
     FH.AGE_IDS.forEach(function (id) { state.inDeck[id] = (id !== 'heroes'); });
     FH.CALAMITY_IDS.forEach(function (id) { state.inDeck[id] = false; });
-    state.drawsThisCycle = 0;
     state.currentCard = 'heroes';
     state.gameOver = false;
     state.history = [];
@@ -81,7 +79,6 @@ window.FH = window.FH || {};
   function continuePlaying(state) {
     FH.AGE_IDS.forEach(function (id) { state.inDeck[id] = true; });
     FH.CALAMITY_IDS.forEach(function (id) { state.inDeck[id] = false; });
-    state.drawsThisCycle = 0;
     state.currentCard = null;
     state.gameOver = false;
     state.history = [];

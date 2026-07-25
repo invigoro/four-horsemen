@@ -24,7 +24,6 @@ window.FH = window.FH || {};
     FH.CALAMITY_IDS.forEach(function (id) { inDeck[id] = false; });
     return {
       inDeck: inDeck,
-      drawsThisCycle: 0,
       currentCard: 'heroes',
       gameOver: false,
       history: []
